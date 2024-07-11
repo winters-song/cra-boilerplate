@@ -5,8 +5,9 @@ const App: React.FC = () => {
 
   return (
     <>
-      Content
-      <div className="colorful-gradient"></div>
+      <div className="colorful-gradient">
+        <h1>Hello World</h1>
+      </div>
     </>
   );
 };
