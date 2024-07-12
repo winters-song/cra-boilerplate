@@ -1,74 +1,107 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  PoweroffOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
-import './style.less'
-import { Outlet } from 'react-router-dom';
+import { Button, Layout, Modal, Tooltip } from 'antd';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { PageWrapper } from './style';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '@/store/reducers/auth';
+import { IStore } from '@/models/store';
+import useUser from '@/components/Auth/User';
+import Navigation from '@/components/Navigation';
 
 const { Header, Sider, Content } = Layout;
 
+
 const App: React.FC = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
+
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer,  },
-  } = theme.useToken();
+  const logged = useSelector((state: IStore) => state.auth.logged);
+  const user = useSelector((state: IStore) => state.auth.user);
+
+  useUser()
+
+  const showLogoutConfirm = () => {
+    Modal.confirm({
+      title: '退出登录',
+      content: '确定退出登录吗？',
+      okText: '确认',
+      cancelText: '取消',
+      onOk: () => {
+        dispatch(logout())
+        navigate('/login')
+      }
+    })
+  }
+
+
+  useEffect(() => {
+    if (logged === false) {
+      navigate('/login')
+    }
+  }, [logged])
 
   return (
-    <Layout className='page-wrapper scrollDark'>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
-        />
-      </Sider>
-      <Layout className='main-wrapper'>
-        <Header className='main-header' style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+    <PageWrapper>
+      <Layout className='layout-wrapper'>
+        <Sider 
+          className='sider-wrapper' 
+          width={250}
+          trigger={null} collapsible collapsed={collapsed}>
+          <div className="header">
+            <div className="logo" >Dashboard</div>
+
+            <Button
+              type="text"
+              size='large'
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+            />
+          </div>
+
+          <div className="body">
+            <div className="title">
+              MAIN MENU
+            </div>
+            <Navigation />
+          </div>
+        </Sider>
+        <Layout className='main-wrapper'>
+          <Header className='main-header' >
+            <div></div>
+            <div className="right-bar">
+              {user && <div className="avatar" style={{ backgroundImage: `url(${user?.icon})` }}></div>}
+              <div className="separator"></div>
+              <Tooltip placement="bottom" overlayClassName="main-header-tooltip" title={"退出登录"} arrow={false}>
+                <Button
+                  type="text"
+                  size='large'
+                  icon={<PoweroffOutlined />}
+                  onClick={showLogoutConfirm}
+                />
+              </Tooltip>
+            </div>
+          </Header>
+          <div className="page-title">
+            课程列表
+          </div>
+          <Content
             style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
+              margin: '24px 16px',
+              padding: 24,
+              minHeight: 280,
             }}
-          />
-        </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-          }}
-        >
-          <Outlet />
-        </Content>
+          >
+            <Outlet />
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </PageWrapper>
   );
 };
 

@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import { ConfigProvider } from "antd";
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './routes';
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './store';
 
 const baseName = ""
 
@@ -14,9 +16,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <ConfigProvider>
-    <BrowserRouter basename={baseName}>
-      <Routes />
-    </BrowserRouter>
+    <ReduxProvider store={store}>
+
+      <BrowserRouter basename={baseName}>
+        <Routes />
+      </BrowserRouter>
+    </ReduxProvider>
   </ConfigProvider>
 
 );

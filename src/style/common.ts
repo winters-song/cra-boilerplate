@@ -1,18 +1,6 @@
-.page-wrapper{
-  height: 100vh;
-}
-.main-wrapper{
-  overflow: auto;
-}
+import { css } from "@emotion/react"
 
-.main-header{
-  position: sticky;
-  top: 0;
-}
-
-
-
-.scrollLight {
+export const scrollLight = css`
   ::-webkit-scrollbar-track-piece{
     background-color: rgba(255, 255, 255, 0.3);
     -webkit-border-radius:5px;
@@ -39,12 +27,12 @@
     background-color:#aaa;
     -webkit-border-radius: 8px;
   }
-}
-  
-.scrollDark {
-  .scrollLight;
+`
+
+export const scrollDark = css`
+  ${scrollLight};
   
   ::-webkit-scrollbar-thumb:vertical{
     background-color: rgba(0, 0, 0, 0.3);
   }
-}
+`

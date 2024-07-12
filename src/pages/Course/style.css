@@ -1,0 +1,12 @@
+
+.colorful-gradient {
+  width: 100%; /* 占满整个容器宽度 */
+  height: 2000px; /* 设置高度为2000px */
+  background-image: linear-gradient(
+    to bottom, 
+    #ff7e5f, /* 渐变开始颜色 */
+    #feb47b,
+    #fff6b7,
+    #abecd6
+  ); /* 纵向渐变颜色 */
+}
