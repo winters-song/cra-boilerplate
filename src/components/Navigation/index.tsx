@@ -2,21 +2,25 @@ import { AppstoreOutlined, MailOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { navigationMap } from "../common/Constants";
+import { useDispatch } from "react-redux";
+import { updatePageTitle } from "@/store/reducers/common";
 
-
-const menus = [
-  '/course/course-list',
-  '/user/user-list'
-]
 
 const Navigation = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const pathname = menus.indexOf(window.location.pathname) !== -1 ? window.location.pathname : '/'
+  const pathname = !!navigationMap[window.location.pathname] ? window.location.pathname : '/'
   const openKey = pathname.split('/')[1]
   const [current, setCurrent] = useState(pathname);
 
   const items = [
+    {
+      key: '/home',
+      icon: <AppstoreOutlined />,
+      label: '首页',
+    },
     {
       key: 'course',
       icon: <MailOutlined />,
@@ -35,18 +39,26 @@ const Navigation = () => {
     },
   ]
 
+
+
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
-
     navigate(e.key)
   };
 
   useEffect(() => {
-    if(menus.indexOf(window.location.pathname) !== -1){
+    if(!!navigationMap[window.location.pathname]){
       setCurrent(window.location.pathname)
     }
   }, [])
+
+  // change page title
+  useEffect(() => {
+    if(current){
+      dispatch(updatePageTitle(navigationMap[current]))
+    }
+  }, [current])
 
   return (
     <Menu

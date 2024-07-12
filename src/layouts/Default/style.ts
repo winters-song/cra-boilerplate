@@ -74,6 +74,16 @@ export const PageWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
 
+
+    .page-title{
+      background-color: white;
+      height: 54px;
+      line-height: 54px;
+      padding-left: 20px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
     .right-bar{
       display: flex;
       flex-direction: row;
@@ -100,5 +110,16 @@ export const PageWrapper = styled.div`
     }
   }
 
+  .main-content{
+    padding: 20px 30px;
+  }
+
+
+// Search form
+.search-form{
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px 30px 10px;
+}
 `
 

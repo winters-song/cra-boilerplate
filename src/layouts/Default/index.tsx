@@ -23,6 +23,7 @@ const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const logged = useSelector((state: IStore) => state.auth.logged);
   const user = useSelector((state: IStore) => state.auth.user);
+  const pageTitle = useSelector((state: IStore) => state.common.pageTitle)
 
   useUser()
 
@@ -39,7 +40,11 @@ const App: React.FC = () => {
     })
   }
 
-
+  /**
+   * logged default null, 
+   * after token's judge, logged will be true or false
+   * if logged is false, redirect to login
+   */
   useEffect(() => {
     if (logged === false) {
       navigate('/login')
@@ -73,7 +78,9 @@ const App: React.FC = () => {
         </Sider>
         <Layout className='main-wrapper'>
           <Header className='main-header' >
-            <div></div>
+            <div className="page-title">
+              {pageTitle}
+            </div>
             <div className="right-bar">
               {user && <div className="avatar" style={{ backgroundImage: `url(${user?.icon})` }}></div>}
               <div className="separator"></div>
@@ -87,16 +94,8 @@ const App: React.FC = () => {
               </Tooltip>
             </div>
           </Header>
-          <div className="page-title">
-            课程列表
-          </div>
-          <Content
-            style={{
-              margin: '24px 16px',
-              padding: 24,
-              minHeight: 280,
-            }}
-          >
+          
+          <Content className="main-content" >
             <Outlet />
           </Content>
         </Layout>
