@@ -15,7 +15,21 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ConfigProvider>
+  <ConfigProvider theme={{
+    token: {
+      // Seed Token，影响范围大
+      colorPrimary: '#5700ff',
+    },
+    // components: {
+    //   Button: {
+    //     colorPrimary: '#5700ff',
+    //     algorithm:true
+    //   },
+    //   Input: {
+    //     colorPrimary: '#eb2f96',
+    //   }
+    // },
+  }}>
     <ReduxProvider store={store}>
 
       <BrowserRouter basename={baseName}>

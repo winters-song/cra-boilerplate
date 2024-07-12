@@ -24,6 +24,12 @@ export const PageWrapper = styled.div`
     .logo{
       display: none;
     }
+
+    .body{
+      .title{
+        display: none;
+      }
+    }
   }
 
   .sider-wrapper{
@@ -51,13 +57,6 @@ export const PageWrapper = styled.div`
         color: #999;
         margin: 20px 30px 5px;
       }
-    }
-
-    .ant-menu-item-selected, .ant-menu-submenu-selected >.ant-menu-submenu-title {
-      color: var(--main-color);
-    }
-    .ant-menu-item-selected{
-      background-color: var(--main-bg-color) !important;
     }
   }
 

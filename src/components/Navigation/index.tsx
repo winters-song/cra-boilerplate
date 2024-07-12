@@ -1,4 +1,4 @@
-import { AppstoreOutlined, MailOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ const Navigation = () => {
     },
     {
       key: 'user',
-      icon: <AppstoreOutlined />,
+      icon: <UserOutlined />,
       label: '用户管理',
       children: [
         { key: '/user/user-list', label: '用户列表'  },
